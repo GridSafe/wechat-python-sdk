@@ -29,7 +29,8 @@ class BaseCrypto(object):
         @return: 加密得到的字符串
         """
         # 16位随机字符串添加到明文开头
-        text = self.get_random_str() + struct.pack("I", socket.htonl(len(text))) + to_binary(text) + appid
+        text = to_binary(text)
+        text = self.get_random_str() + struct.pack("I", socket.htonl(len(text))) + text + appid
         # 使用自定义的填充方式对明文进行补位填充
         pkcs7 = PKCS7Encoder()
         text = pkcs7.encode(text)
@@ -80,4 +81,4 @@ class BaseCrypto(object):
         @return: 16位字符串
         """
         rule = string.ascii_letters + string.digits
-        return "".join(random.sample(rule, 16))
+        return to_binary("".join(random.sample(rule, 16)))
