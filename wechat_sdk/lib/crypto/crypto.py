@@ -85,11 +85,10 @@ class WechatBaseCrypto(object):
         """
         timestamp = to_binary(timestamp)
         nonce = to_binary(nonce)
-        if isinstance(msg, six.string_types):
-            try:
-                msg = xmltodict.parse(to_text(msg))['xml']
-            except Exception as e:
-                raise ParseError(e)
+        try:
+            msg = xmltodict.parse(to_text(msg))['xml']
+        except Exception as e:
+            raise ParseError(e)
 
         encrypt = msg['Encrypt']
         signature = get_sha1_signature(self.__token, timestamp, nonce, encrypt)
