@@ -574,7 +574,7 @@ class WechatBasic(WechatBase):
         :param state: 重定向后会带上state参数，开发者可以填写a-zA-Z0-9的参数值，最多128字节
         :return: 用户授权的url链接字符串
         """
-        redirect_uri = requests.utils.quote(redirect_uri)
+        redirect_uri = requests.utils.quote(redirect_uri, safe='')
         url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=%s&redirect_uri=%s&response_type=%s&scope=%s&state=%s#wechat_redirect" % (
             self.conf.appid,
             redirect_uri,
